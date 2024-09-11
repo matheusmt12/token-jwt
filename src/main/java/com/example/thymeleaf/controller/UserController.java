@@ -1,9 +1,6 @@
 package com.example.thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.thymeleaf.UserDTO;
+import com.example.thymeleaf.Service.UserService;
 import com.example.thymeleaf.entity.User;
-import com.example.thymeleaf.repository.IRepositoryUser;
 import com.example.thymeleaf.security.JwtService;
-import com.example.thymeleaf.security.UserInfoService;
 
 
 @RestController
@@ -26,7 +22,7 @@ import com.example.thymeleaf.security.UserInfoService;
 public class UserController {
 
     @Autowired
-    private UserInfoService service;
+    private UserService service;
 
     @Autowired
     private JwtService jwtService;
