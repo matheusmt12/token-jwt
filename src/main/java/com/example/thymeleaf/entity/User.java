@@ -1,10 +1,23 @@
 package com.example.thymeleaf.entity;
 
+
+import java.util.List;
+
+import com.example.thymeleaf.Model.Roles;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,18 +26,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "users")
 public class User {
-   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "name", length = 50, nullable = false)
-    private String name;
-    @Column(name = "roles" , length = 12, nullable = false)
-    private String roles;
-    @Column(name = "email", unique = true, nullable = false,length = 50)
+    @Column(name = "id")
+    private Long id;
+    
+    @Column(name = "email",unique = true)
     private String email;
-    @Column(name = "password", nullable = false, length = 10)
+
+
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name="users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private List<Role> roles;
 }
