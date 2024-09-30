@@ -1,10 +1,13 @@
 package com.example.thymeleaf.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +26,7 @@ public class Marca {
     private long id;
     @Column(name = "name",length = 15,nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "marca")
+    private List<Modelo> modelos;
 }
