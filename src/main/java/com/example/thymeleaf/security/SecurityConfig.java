@@ -38,7 +38,7 @@ public class SecurityConfig {
 	      http
 	        .csrf(csrf->csrf.disable())
 	        .authorizeHttpRequests(request -> request
-	                .requestMatchers("/modelo").permitAll()
+	                
 	                .requestMatchers("/login").permitAll()
 	                .requestMatchers("/sing-up").permitAll()
                     .requestMatchers("/").permitAll()
