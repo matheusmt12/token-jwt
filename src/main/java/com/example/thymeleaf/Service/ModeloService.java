@@ -56,5 +56,4 @@ public class ModeloService {
         }
         ).collect(Collectors.toList());
     }
-
 }
