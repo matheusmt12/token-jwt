@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.thymeleaf.entity.Carro;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

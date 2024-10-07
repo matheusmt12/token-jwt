@@ -9,9 +9,7 @@ import com.example.thymeleaf.entity.Marca;
 import com.example.thymeleaf.entity.Modelo;
 import com.example.thymeleaf.exceptions.NoFindMarcaException;
 import com.example.thymeleaf.repository.IRepositoryMarca;
-import java.lang.Object;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import jakarta.transaction.Transactional;
@@ -73,5 +71,22 @@ public class MarcaService {
             .air_bag(m.isAir_bag())
             .build()
         ).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Marca put(long id, MarcaDTO marca){
+
+       Marca m = repositoryMarca.findById(id).orElseThrow(
+            () -> new NoFindMarcaException("Marca nao encontrada"));
+        m.setId(marca.getId());
+        m.setName(marca.getName());
+        repositoryMarca.save(m);
+        return m;
+    }
+
+    @Transactional
+    public long delete(long id){
+        repositoryMarca.deleteById(id);
+        return id;
     }
 }
