@@ -74,14 +74,15 @@ public class MarcaService {
     }
 
     @Transactional
-    public Marca put(long id, MarcaDTO marca){
+    public MarcaDTO put(long id, MarcaDTO marca){
 
        Marca m = repositoryMarca.findById(id).orElseThrow(
             () -> new NoFindMarcaException("Marca nao encontrada"));
-        m.setId(marca.getId());
+        m.setId(id);
         m.setName(marca.getName());
         repositoryMarca.save(m);
-        return m;
+        marca.setId(id);
+        return marca;
     }
 
     @Transactional

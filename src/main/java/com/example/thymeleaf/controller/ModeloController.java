@@ -42,4 +42,5 @@ public class ModeloController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.valueOf(500));
         }
     }
+
 }
