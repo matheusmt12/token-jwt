@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.example.thymeleaf.dto.ModeloDTO;
 import com.example.thymeleaf.entity.Carro;
 import com.example.thymeleaf.entity.Modelo;
+import com.example.thymeleaf.exceptions.NoFindModeloException;
 import com.example.thymeleaf.repository.IRepositoryModelo;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ModeloService {
@@ -49,11 +52,31 @@ public class ModeloService {
             c.setId(carro.getId());
             c.setDisponivel(carro.isDisponivel());
             c.setKm(carro.getKm());
-            c.setName(carro.getName());
             c.setPlaca(carro.getPlaca());
             return c;
             
         }
         ).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ModeloDTO edit(long id, ModeloDTO modelo){
+
+        Modelo m = repositoryModelo.findById(id).orElseThrow(() -> 
+            new NoFindModeloException("O modelo nao foi encontrado"));
+
+        m.setAbs(modelo.isAbs());
+        m.setAir_bag(modelo.isAir_bag());
+        m.setId(id);
+        m.setLugares(modelo.getLugares());
+        m.setName(modelo.getName());
+        m.setNum_portas(modelo.getNum_portas());
+        repositoryModelo.save(m);
+        return getModelo(m);
+    }
+
+    public long delete(long id){
+        repositoryModelo.deleteById(id);
+        return id;
     }
 }

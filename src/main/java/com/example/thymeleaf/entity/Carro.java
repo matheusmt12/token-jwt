@@ -27,8 +27,6 @@ public class Carro {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name", length = 15,nullable = false)
-    private String name;
     @Column(name = "placa", length = 10)
     private String placa;
     @Column(name = "disponivel")
