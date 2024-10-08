@@ -30,8 +30,8 @@ public class Cliente {
     
     @Column(name = "cpf",length = 15,unique = true,nullable = false)
     private String cpf; 
-    @Column(name = "telefone", length = 10)
-    private int telefone;
+    @Column(name = "telefone", length = 18)
+    private String telefone;
     @Column(name = "email", length = 30,nullable = false)
     private String email;
 
