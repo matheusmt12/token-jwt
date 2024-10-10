@@ -1,10 +1,11 @@
 package com.example.thymeleaf.security;
 
+import java.lang.reflect.Method;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,9 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -41,6 +40,7 @@ public class SecurityConfig {
 	                
 	                .requestMatchers("/login").permitAll()
 	                .requestMatchers("/sing-up").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/modelo").permitAll()
                     .requestMatchers("/").permitAll()
 	                .anyRequest().authenticated())
 

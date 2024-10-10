@@ -26,24 +26,25 @@ public class Locacoes {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "data_inicio_locacao")
+    @Column(name = "data_inicio_locacao",nullable = false)
     private LocalDateTime data_inicio_locacao;
     @Column(name = "data_fim_locacao_previsto")
     private LocalDateTime data_fim_locacao_previsto;
     @Column(name = "data_fim_locacao")
     private LocalDateTime data_fim_locacao;
-    @Column(name = "valor")
+    @Column(name = "valor", nullable = false)
     private float valor;
-    @Column(name = "km_inicial")
+    @Column(name = "km_inicial", nullable = false)
     private int km_inicial;
     @Column(name = "km_final")
     private int km_final;
-
+    @Column(name = "finalizada",nullable = false)
+    private boolean finalizada;
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id",nullable = false)
     private Cliente cliente;
     @ManyToOne
-    @JoinColumn(name = "carro_id")
+    @JoinColumn(name = "carro_id",nullable = false)
     private Carro carro;
 
 }

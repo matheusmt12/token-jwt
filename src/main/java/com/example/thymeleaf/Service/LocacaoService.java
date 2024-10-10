@@ -1,8 +1,13 @@
 package com.example.thymeleaf.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.thymeleaf.dto.LocacaoDTO;
 import com.example.thymeleaf.entity.Carro;
 import com.example.thymeleaf.entity.Cliente;
 import com.example.thymeleaf.entity.Locacoes;
@@ -51,10 +56,34 @@ public class LocacaoService {
         c.setDisponivel(false);
         repositoryCarro.save(c);
         locacao.setCarro(c);
+        locacao.setData_inicio_locacao(LocalDateTime.now());
+        locacao.setFinalizada(false);
         locacao.setKm_inicial(c.getKm());
-
         return repositoryLocacao.save(locacao).getId();
     }
-    
+
+
+    public List<LocacaoDTO> fidAll(){
+
+        return repositoryLocacao.findAll().stream().map(locacao ->
+            getLocacao(locacao)    
+        ).collect(Collectors.toList());
+    }
+
+    public LocacaoDTO getLocacao(Locacoes locacao){
+        return LocacaoDTO.builder()
+            .codigo(locacao.getId())
+            .dataFim(locacao.getData_fim_locacao())
+            .dataLocacao(locacao.getData_inicio_locacao())
+            .dataPrevista(locacao.getData_fim_locacao_previsto())
+            .kmFinal(locacao.getKm_final())
+            .kmInicial(locacao.getKm_inicial())
+            .nameCarro(locacao.getCarro().getModelo().getName())
+            .nameMarca(locacao.getCarro().getModelo().getMarca().getName())
+            .nameCliente(locacao.getCliente().getName())
+            .finalizada(locacao.isFinalizada())
+            .build();
+    }
+
 
 }
