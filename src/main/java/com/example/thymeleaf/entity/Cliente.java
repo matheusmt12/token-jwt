@@ -34,7 +34,8 @@ public class Cliente {
     private String telefone;
     @Column(name = "email", length = 30,nullable = false)
     private String email;
-
+    @Column(name = "active", nullable = false)
+    private boolean active;
     @OneToMany(mappedBy = "cliente")
     private List<Locacoes> locacoes;
 }

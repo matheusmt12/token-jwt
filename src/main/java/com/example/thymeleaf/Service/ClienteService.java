@@ -25,6 +25,7 @@ public class ClienteService {
 
     @Transactional
     public long save(Cliente cliente){
+        cliente.setActive(true);
         Cliente c = repositoryCliente.save(cliente);
         return c.getId();
     }
