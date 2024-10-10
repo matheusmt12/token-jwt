@@ -12,11 +12,17 @@
     <header th:replace="~{header :: hed}"></header>
     <div id="app">
 
-        <input type="text" v-model="name">
-        <input type="text" v-model="modelo">
 
-        <button type="submit" @click="getModelos()">teste</button>
-        <p>{{name}}</p>
+        <div v-for="m in modelos">
+            {{m}}
+            <p v-if="m.carros != 0">
+                <p v-for="c in m.carros">
+                    {{c.id}}
+                </p>
+            </p>
+
+        </div>
+
 
     </div>
 
@@ -25,17 +31,22 @@
            createApp({
             data(){
                 return{
-                    name : "",
-                    modelo: ''
+                   modelos: [],
+                   name : ''
                 }
             },
             methods:{
                 getModelos(){
-                    axios.get('http://localhost:8080/modelo').them(response => {
-                        console.log(response); 
+                    axios.get('http://localhost:8080/modelo').then(response => {
+                        this.modelos = response.data
+                        console.log(this.modelos.slice());
+                        
                     })
                     
                 }
+            },
+            mounted(){
+                this.getModelos();
             }
            }).mount('#app')
         
