@@ -1,6 +1,5 @@
 package com.example.thymeleaf.security;
 
-import java.lang.reflect.Method;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +26,12 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailService userDetailService;
 
+    @Autowired
+    private JwtAccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
     @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -42,11 +47,18 @@ public class SecurityConfig {
 	                .requestMatchers("/sing-up").permitAll()
                     .requestMatchers(HttpMethod.GET,"/modelo").permitAll()
                     .requestMatchers("/").permitAll()
+                    .requestMatchers("access/login").permitAll()
+                    .requestMatchers("teste").permitAll()
 	                .anyRequest().authenticated())
-
+            .exceptionHandling(exception -> exception
+                .accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(authenticationEntryPoint)
+            )
 	        .sessionManagement((session)-> session
 	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+            
+            
 
 	      return http.build();
 	}
