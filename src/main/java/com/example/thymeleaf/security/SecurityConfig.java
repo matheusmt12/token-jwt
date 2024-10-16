@@ -43,17 +43,16 @@ public class SecurityConfig {
 	        .csrf(csrf->csrf.disable())
 	        .authorizeHttpRequests(request -> request
 	                
-	                .requestMatchers("/login").permitAll()
+	                .requestMatchers("/login","/").permitAll()
 	                .requestMatchers("/sing-up").permitAll()
                     .requestMatchers(HttpMethod.GET,"/modelo").permitAll()
-                    .requestMatchers("/").permitAll()
                     .requestMatchers("access/login").permitAll()
                     .requestMatchers("teste").permitAll()
 	                .anyRequest().authenticated())
-            .exceptionHandling(exception -> exception
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(authenticationEntryPoint)
-            )
+            // .exceptionHandling(exception -> exception
+            //     .accessDeniedHandler(accessDeniedHandler)
+            //     .authenticationEntryPoint(authenticationEntryPoint)
+            // )
 	        .sessionManagement((session)-> session
 	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -76,7 +75,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://127.0.0.1:5500")
+                    .allowedOrigins("http://localhost:5173")
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
                     .allowCredentials(true);
